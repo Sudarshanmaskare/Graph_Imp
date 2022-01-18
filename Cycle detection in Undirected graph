@@ -1,0 +1,120 @@
+//BFS
+
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+    bool bfs(int v,vector<bool> &vis,vector<int> adj[]){
+        queue<pair<int,int>> q;
+        vis[v]=true;
+        q.push({v,-1});
+        while(!q.empty()){
+            auto temp=q.front();
+            q.pop();
+            int par=temp.second;
+            int node=temp.first;
+            for(auto var:adj[node]){
+                if(var!=par){
+                    if(vis[var]) return true;
+                    vis[var]=true;
+                    q.push({var,node});
+                }
+            }
+        }
+        return false;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        vector<bool> vis(V,false);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(bfs(i,vis,adj)) return true;
+            }
+        }
+        return false;
+    }
+};
+
+// { Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int V, E;
+        cin >> V >> E;
+        vector<int> adj[V];
+        for (int i = 0; i < E; i++) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        Solution obj;
+        bool ans = obj.isCycle(V, adj);
+        if (ans)
+            cout << "1\n";
+        else
+            cout << "0\n";
+    }
+    return 0;
+}  // } Driver Code Ends
+
+
+
+///////////////////////////////////////////////DFS/////////////////////////////////////////////////////////
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+    bool dfs(int v,vector<bool> &vis,vector<int> adj[],int par){
+        vis[v]=true;
+        for(auto var:adj[v]){
+            if(var!=par){
+                if(vis[var]) return true;
+                if(dfs(var,vis,adj,v)) return true;
+            }
+        }
+        return false;
+    }
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        vector<bool> vis(V,false);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(dfs(i,vis,adj,-1)) return true;
+            }
+        }
+        return false;
+    }
+};
+
+// { Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int V, E;
+        cin >> V >> E;
+        vector<int> adj[V];
+        for (int i = 0; i < E; i++) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        Solution obj;
+        bool ans = obj.isCycle(V, adj);
+        if (ans)
+            cout << "1\n";
+        else
+            cout << "0\n";
+    }
+    return 0;
+}  // } Driver Code Ends
