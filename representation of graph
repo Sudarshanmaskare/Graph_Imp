@@ -1,0 +1,16 @@
+//For undirected graph
+
+// u-v
+vector<int> adj[];
+int u,v;
+adj[u].push_back(v);
+adj[v].push_back(u);
+
+
+//For undirected graph
+
+// u->v;
+
+vector<int> adj[];
+int u,v;
+adj[u].push_back(v);
