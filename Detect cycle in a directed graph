@@ -1,0 +1,145 @@
+///////////////////////////////////////////////////////////////////////////////Dfs
+
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+  public:
+    // Function to detect cycle in a directed graph.
+    bool dfs(vector<int> adj[],vector<int> &vis,vector<int> &dfs_vis,int i){
+        vis[i]=1;
+        dfs_vis[i]=1;
+        for(auto var:adj[i]){
+            if(!vis[var]){
+                if(dfs(adj,vis,dfs_vis,var)) return true;
+            }
+            else if(dfs_vis[var]) return true;
+        }
+        dfs_vis[i]=0;
+        return false;
+    }
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        vector<int> dfs_vis(V,0);
+        vector<int> vis(V,0);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(dfs(adj,vis,dfs_vis,i)) return true;
+            }
+        }
+        return false;
+    }
+};
+
+// { Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int V, E;
+        cin >> V >> E;
+
+        vector<int> adj[V];
+
+        for (int i = 0; i < E; i++) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+        }
+
+        Solution obj;
+        cout << obj.isCyclic(V, adj) << "\n";
+    }
+
+    return 0;
+}
+  // } Driver Code Ends
+  
+  
+/////////////////////////////////////////////////////////////BFS
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+
+
+
+class Solution
+{
+    public:
+bool topoSort(int V, vector<int> adj[])
+{ int visited=0;
+ int indegree[V] = {0};
+ for(int i =0;i<V;i++)
+ {
+     for(int j =0;j<adj[i].size();j++)
+     {
+         indegree[adj[i][j]]++;
+     }
+ }
+
+ queue<int> q;
+ for(int i =0;i<V;i++)
+ {
+     if(indegree[i]==0)
+     q.push(i);
+ }
+ while(!q.empty())
+ {
+     int u =q.front();
+     q.pop();
+     
+    visited++;
+     for(int j =0; j <adj[u].size();j++)
+     {
+         indegree[adj[u][j]]--;
+         if(indegree[adj[u][j]]==0)
+         q.push(adj[u][j]);
+     }
+ }
+if(visited<V)
+return true;
+else
+return false;
+}
+
+bool isCyclic(int V, vector<int> adj[])
+{
+    return topoSort(V,adj);
+}
+};
+
+// { Driver Code Starts.
+
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+
+    	vector<int> adj[V];
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.isCyclic(V, adj) << "\n";
+    }
+
+    return 0;
+}
+
+  // } Driver Code Ends
