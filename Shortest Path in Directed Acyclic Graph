@@ -1,3 +1,13 @@
+///Three Solutions
+
+
+Using Bellman-Ford [ TC = O(VE) ]
+Using Dijkstra's Algorithm [ TC = O(E + Vlog(V)) ]
+Topological Sort [ TC = O(V + E) ]
+
+
+
+
 #include <bits/stdc++.h> 
 #define INF INT_MAX 
 using namespace std; 
