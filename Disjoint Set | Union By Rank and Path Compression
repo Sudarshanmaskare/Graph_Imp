@@ -1,0 +1,27 @@
+int parent_dsu[100000]; 
+int rank_dsu[100000];
+
+void set_dsu(int n) {
+    for (int i = 0; i <= n; i++) {
+    parent_dsu[i] = i;
+    rank_dsu[i] = 0;
+    }
+}
+int findpar_dsu(int node) {
+    if (node == parent_dsu[node]) return node; 
+    return parent_dsu[node] = findpar_dsu(parent_dsu[node]);
+}
+void union_dsu(int u, int v) {
+    int parent_u = findpar_dsu(u); 
+    int parent_v = findpar_dsu(v);
+    if (rank_dsu[parent_u] < rank_dsu[parent_v])
+    {
+    parent_dsu[parent_u] = parent_v;
+    } 
+    else if (rank_dsu[parent_u] > rank_dsu[parent_v]) {
+    parent_dsu[parent_v] = parent_u;
+    } 
+    else {
+    parent_dsu[u] = parent_v; 
+    rank_dsu[parent_v]++;}
+}
