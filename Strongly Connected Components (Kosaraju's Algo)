@@ -1,0 +1,89 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+
+
+class Solution
+{
+	public:
+	void dfscall(stack<int> &stk,vector<int> &vis,vector<int> adj[],int v){
+	    vis[v]=1;
+	    for(auto var:adj[v]){
+	        if(!vis[var]){
+	            dfscall(stk,vis,adj,var);
+	        }
+	    }
+	    stk.push(v);
+	}
+	void dfs(stack<int> &stk,int V,vector<int> adj[]){
+	    vector<int> vis(V,0);
+	    for(int i=0;i<V;i++){
+	        if(vis[i]==0){
+	            dfscall(stk,vis,adj,i);
+	        }
+	    }
+	}
+	void dfsrec(int v,vector<int> &vis,vector<int> adj[]){
+	    vis[v]=1;
+	    for(auto var:adj[v]){
+	        if(!vis[var]){
+	            dfsrec(var,vis,adj);
+	        }
+	    }
+	   // stk.push(v);
+	}
+    int kosaraju(int V, vector<int> adj[])
+    {
+        stack<int> stk;
+        dfs(stk,V,adj);
+        vector<int> rev[V];
+        for(int i=0;i<V;i++){
+            for(auto m:adj[i]){
+                rev[m].push_back(i);
+            }
+        }
+        int ans=0;
+        vector<int> vis(V,0);
+        while(stk.size()){
+            auto final=stk.top();
+            stk.pop();
+            if(vis[final]==0){
+                dfsrec(final,vis,rev);
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+
+// { Driver Code Starts.
+
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+
+    	vector<int> adj[V];
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.kosaraju(V, adj) << "\n";
+    }
+
+    return 0;
+}
+
+  // } Driver Code Ends
